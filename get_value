@@ -1,0 +1,4 @@
+#!/bin/bash
+max_processes=$(getconf _NPROCESSORS_ONLN)
+max_pid=$(echo "2^22 - 1" | bc)
+echo "The maximum process ID value on this system is $max_pid"
