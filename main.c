@@ -1,53 +1,51 @@
 #include "shell.h"
+#include <stdlib.h>
+#include <unistd.h>
+/**
+ * main_errors_helper - error handler to prevent more than 40 line
+ * @text: error message
+ * @code: exit code
+ * Return: Nothing.
+*/
+void main_errors_helper(char *text, int code)
+{
+	perror(text);
+	exit(code);
+}
 
 /**
- * main - this an entry point
- *
- * Return: Always 0 (Success)
- */
-int main(void)
+ * main - the program starts here.
+ * @argc: argument length
+ * @argv: arguments
+ * Return: 0
+*/
+int main(int argc, char *argv[])
 {
-	char input[MAX_INPUT_LENGTH];
-	pid_t pid;
-	int status;
-	char *command = parse_command(input);
-	char **arguments = parse_arguments(input);
+	char *prompt = "#cisfun$ ", *line, **args;
+	int status = 1;
 
-	while (1)
-	{
-		printf("$ ");
-		if (!fgets(input, MAX_INPUT_LENGTH, stdin))
+	(void)argc;
+
+	do {
+		if (!isatty(STDIN_FILENO))
+			write(STDIN_FILENO, prompt, _strlen(prompt));
+
+		line = _readline();
+		if (line == NULL)
+		{
+			free(line);
 			break;
-		input[strcspn(input, "\n")] = '\0';
-		if (strcmp(input, "exit") == 0)
-			exit(0);
-
-		if (command == NULL)
-		{
-			printf("The command is not valid\n");
-			continue;
 		}
 
-		pid = fork();
-		if (pid == -1)
+		args = parse_line(line);
+		if (args[0] != NULL)
 		{
-			perror("fork error");
-			exit(EXIT_FAILURE);
+			command_execution(args, argv);
+			free(args);
 		}
-		else if (pid == 0)
-		{
-			if (execvp(command, arguments) == -1)
-			{
-				perror("execvp");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-		}
-		free(command);
-		free_arguments(arguments);
-	}
+		free(line);
+	} while (status);
+
 	return (0);
 }
+
