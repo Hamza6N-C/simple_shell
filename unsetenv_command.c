@@ -3,7 +3,7 @@
 /**
  * unsetenv_command - implement unsetenv command
  * @args: arguments
- * Return: Nothing
+ * Return: 0 on success, or 1 on failure.
 */
 
 int unsetenv_command(char **args)
