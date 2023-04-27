@@ -6,17 +6,18 @@
  * Return: Nothing
 */
 
-void unsetenv_command(char **args)
+int unsetenv_command(char **args)
 {
 	if (args[1] == NULL)
 	{
 		perror("unsetenv");
-		return;
+		return (1);
 	}
 
 	if (unsetenv(args[1]) == -1)
 	{
 		perror("unsetenv");
-		return;
+		return (1);
 	}
+	return (0);
 }

@@ -32,8 +32,8 @@ void handle_error(char *message);
 int cd_command(char **args);
 int echo_command(char **args);
 int exit_command(char **args);
-void setenv_command(char **args);
-void unsetenv_command(char **args);
+int setenv_command(char **args);
+int unsetenv_command(char **args);
 int hundle_alias(char **args);
 int run_script(char *filename);
 int launch(char **args);
@@ -42,7 +42,5 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *getpid_string(void);
 size_t _strlen(const char *s);
 int _strcmp(const char *s1, const char *s2);
-
-
 
 #endif
