@@ -13,7 +13,7 @@
 
 /*EXTERNAL VAR*/
 extern int status_of_last_exit;
-extern char **envir;
+extern char **environ;
 
 /*MAIN FUNCTIONS*/
 char *_readline(void);

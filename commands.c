@@ -97,7 +97,7 @@ void hundle_exit(char **args)
 
 void hundle_env(char **args)
 {
-	char **envptr = envir;
+	char **envptr = environ;
 
 	if (args == NULL)
 		return;
